@@ -1,11 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AppDataService } from './app.dataService ';
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+interface Cdmusica {
+  id: number;
+  artista: string;
+  titulo: string;
+  generoMusical: string;
+  musicas: Musica[];
+}
+interface Musica {
+  id: number;
+  idCd: number;
+  nomeMusica: string;
+  tempoMusica: string;  
 }
 
 @Component({
@@ -14,24 +21,34 @@ interface WeatherForecast {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+  title = 'cadastrocd.client';
+  public cds: Cdmusica[] = [];
+  public musicas: Musica[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private dataService: AppDataService) {}
 
   ngOnInit() {
-    this.getForecasts();
+    this.getcds();
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+  getcds() {
+    this.dataService.Get().subscribe(
       (result) => {
-        this.forecasts = result;
+        console.log(result);
+        this.cds = result;
       },
       (error) => {
         console.error(error);
       }
     );
-  }
+  };
 
-  title = 'cadastrocd.client';
+  listarMusicas(idCd: number): void {
+    let mus = this.cds.find((element) => element.id == idCd)?.musicas;
+    if (mus != undefined) {
+      this.musicas = mus;
+    }
+
+  }
+  
 }

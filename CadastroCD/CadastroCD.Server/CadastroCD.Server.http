@@ -1,6 +1,6 @@
 @CadastroCD.Server_HostAddress = http://localhost:5195
 
-GET {{CadastroCD.Server_HostAddress}}/weatherforecast/
+GET {{CadastroCD.Server_HostAddress}}/
 Accept: application/json
 
 ###

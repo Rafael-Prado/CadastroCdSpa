@@ -24,7 +24,6 @@ namespace CadastroCD.Server.Controllers
         /// </summary>
         /// <returns>Objetos contendo valores do cds</returns>
         [HttpGet]
-        [Route("list")]
         public async  Task<ActionResult<List<CdMusica>>> ListCdAsync()
         {
             var cds = await _service.GetAll();
@@ -48,8 +47,20 @@ namespace CadastroCD.Server.Controllers
         [Route("create")]
         public ActionResult Create([FromBody] CdMusicaModel cd)
         {
-           var id = _service.AddCd(_mapper.Map<CdMusica>(cd));
-            return Ok(id);
+            var teste = 0;
+            while (teste <= 10)
+            {
+                teste++;
+
+                _service.AddCd(_mapper.Map<CdMusica>(new CdMusicaModel
+                {
+                    Id = teste,
+                    Artista = "teste" + teste,
+                    GeneroMusical = "Musicas" + teste,
+                    Titulo = "Minhas musicas" + teste
+                }));
+            }
+            return Ok();
         }
     }
 }
