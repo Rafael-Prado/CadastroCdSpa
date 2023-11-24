@@ -20,6 +20,10 @@ builder.Services.AddDbContext<ApiContext>(opt => opt.UseInMemoryDatabase("TesteC
 
 builder.Services.AddTransient<ICdRepository, CdRepository>();
 builder.Services.AddTransient<ICdService, CdService>();
+
+builder.Services.AddTransient<IMusicaRepository, MusicaRepository>();
+builder.Services.AddTransient<IMusicaService, MusicaService>();
+
 builder.Services.AddAutoMapper(typeof(ConfigurationMapping));
 
 

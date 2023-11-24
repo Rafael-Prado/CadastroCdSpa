@@ -18,6 +18,11 @@ namespace Cd.Domain.Service
 
         }
 
+        public async Task<CdMusica> CdsFiltro(string tituloCd, string artista, string generoMusical, string musica)
+        {
+            return await _repository.CdsFiltro(tituloCd, artista, generoMusical, musica);
+        }
+
         public async Task<List<CdMusica>> GetAll()
         {
            return await _repository.GetAll();

@@ -6,5 +6,6 @@
         public string Titulo { get; set; }
         public string Artista { get; set; }
         public string GeneroMusical { get; set; }
+
     }
 }

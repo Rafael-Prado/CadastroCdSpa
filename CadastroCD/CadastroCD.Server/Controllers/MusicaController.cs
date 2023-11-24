@@ -2,33 +2,34 @@
 using CadastroCD.Server.Model;
 using Cd.Domain.Model;
 using Cd.Domain.Service.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CadastroCD.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CdController : Controller
+    public class MusicaController : Controller
     {
-        private readonly ICdService _service;
+        private readonly IMusicaService _service;
         private readonly IMapper _mapper;
 
-        public CdController(ICdService service, IMapper mapper)
+        public MusicaController(IMusicaService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
 
         /// <summary>
-        /// Pegar todos os CDS
+        /// Pegar todas as musicas
         /// </summary>
         /// <returns>Objetos contendo valores do cds</returns>
         [HttpGet]
         [Route("list")]
-        public async  Task<ActionResult<List<CdMusica>>> ListCdAsync()
+        public async  Task<ActionResult<List<Musica>>> ListMusicaAsync()
         {
-            var cds = await _service.GetAll();
-            return Ok(cds);
+            var musicas = await _service.GetAll();
+            return Ok(musicas);
         }
 
         /// <summary>
@@ -36,20 +37,21 @@ namespace CadastroCD.Server.Controllers
         /// </summary>
         /// <returns>Objetos cd com suas musicas</returns>
         [HttpGet]
-        [Route("filtro")]
-        public async Task<ActionResult<CdMusica>> CdsFiltro(string tituloCd, string artista, string GeneroMusical, string musica)
+        [Route("cdmusicas/{id}")]
+        public async Task<ActionResult<List<Musica>>> Details(int id)
         {
-            var cd = await _service.CdsFiltro(tituloCd, artista, GeneroMusical, musica);
-            return Ok(cd);
+            var musicas = await _service.GetMusicaIdCd(id);
+            return Ok(musicas);
         }
 
         // POST: Cd/Create
         [HttpPost]
         [Route("create")]
-        public ActionResult Create([FromBody] CdMusicaModel cd)
+        public ActionResult Create([FromBody] MusicaModel musica)
         {
-           var id = _service.AddCd(_mapper.Map<CdMusica>(cd));
+           var id = _service.AddMusica(_mapper.Map<Musica>(musica));
             return Ok(id);
         }
+
     }
 }
